@@ -1,0 +1,3 @@
+<template>
+  <input-field default="org.arhan">IJ_BASE_PACKAGE</input-field>
+</template>
