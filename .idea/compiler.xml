@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="jfrog-kotlin-dsl" />
+        <module name="JFrogKotlinDsl_dsl" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="jfrog-kotlin-dsl" target="1.8" />
+      <module name="JFrogKotlinDsl_dsl" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
