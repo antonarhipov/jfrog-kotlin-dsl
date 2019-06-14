@@ -19,12 +19,8 @@ class JFrogCLI() : ScriptBuildStep() {
         block()
         if (command == UPLOAD) {
             scriptContent = """
-            JFROG_CLI_OFFER_CONFIG=false jfrog rt u $source $target \
-            --build-name=$buildName \
-            --buildNumber=$buildNumber \
-            --url=--url=http://localhost:8040/artifactory/ \
-            --user=admin \
-            --password=password
+            echo 'Hello!'
+            JFROG_CLI_OFFER_CONFIG=false jfrog rt u $source $target --build-name=$buildName --buildNumber=$buildNumber --url=--url=http://localhost:8040/artifactory/ --user=admin --password=password
             """.trimIndent()
         }
     }
