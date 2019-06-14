@@ -28,6 +28,11 @@ object Build : BuildType({
             buildName = "artifact"
             buildNumber = "%build.number%"
         }
+        jfrog {
+            command = PUBLISHBUILDINFO
+            buildName = "artifact"
+            buildNumber = "%build.number%"
+        }
     }
 
     triggers {

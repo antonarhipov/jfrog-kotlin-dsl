@@ -19,8 +19,14 @@ class JFrogCLI() : ScriptBuildStep() {
         block()
         if (command == UPLOAD) {
             scriptContent = """
-            JFROG_CLI_OFFER_CONFIG=false jfrog rt u target/artifact-1.0-SNAPSHOT.jar generic-local/artifact/%build.number%/ --build-number=%build.number% --build-name=artifact --url=http://localhost:8040/artifactory/ --user=admin --password=password
+                JFROG_CLI_OFFER_CONFIG=false jfrog rt u target/artifact-1.0-SNAPSHOT.jar generic-local/artifact/%build.number%/ --build-number=$buildNumber --build-name=$buildName --url=http://localhost:8040/artifactory/ --user=admin --password=password
             """.trimIndent()
+        }
+        if (command == PUBLISHBUILDINFO) {
+            scriptContent = """
+                JFROG_CLI_OFFER_CONFIG=false jfrog rt bp --url=http://localhost:8040/artifactory/ --user=admin --password=password $buildName $buildNumber
+            """.trimIndent()
+
         }
     }
 }
