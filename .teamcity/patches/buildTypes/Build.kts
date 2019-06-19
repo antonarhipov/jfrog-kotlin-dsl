@@ -11,7 +11,7 @@ accordingly, and delete the patch script.
 changeBuildType(RelativeId("Build")) {
     params {
         add {
-            password("artifactoryPassword", "credentialsJSON:703370fe-2d9f-4e78-b3b5-f35d0f4c362d")
+            password("artifactoryPassword", "credentialsJSON:31febc20-7c58-4e63-9b22-59d009a38298")
         }
     }
 }
