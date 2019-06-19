@@ -1,6 +1,10 @@
 package patches.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.v2018_2.*
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.MavenBuildStep
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.ScriptBuildStep
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.maven
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2018_2.ui.*
 
 /*
@@ -12,6 +16,29 @@ changeBuildType(RelativeId("Build")) {
     params {
         add {
             password("artifactoryPassword", "credentialsJSON:31febc20-7c58-4e63-9b22-59d009a38298")
+        }
+    }
+
+    expectSteps {
+        maven {
+            goals = "clean package"
+            runnerArgs = "-Dmaven.test.failure.ignore=true"
+            localRepoScope = MavenBuildStep.RepositoryScope.MAVEN_DEFAULT
+            jdkHome = "%env.JDK_18%"
+        }
+        script {
+            scriptContent = "JFROG_CLI_OFFER_CONFIG=false jfrog rt u target/artifact-1.0-SNAPSHOT.jar generic-local/artifact/%build.number%/ --build-number=%build.number% --build-name=artifact --url=http://localhost:8040/artifactory/ --user=admin --password=password"
+        }
+        script {
+            scriptContent = "JFROG_CLI_OFFER_CONFIG=false jfrog rt bp --url=http://localhost:8040/artifactory/ --user=admin --password=password artifact %build.number%"
+        }
+    }
+    steps {
+        update<ScriptBuildStep>(1) {
+            scriptContent = "JFROG_CLI_OFFER_CONFIG=false jfrog rt u target/artifact-1.0-SNAPSHOT.jar generic-local/artifact/%build.number%/ --build-number=%build.number% --build-name=artifact --url=http://localhost:8040/artifactory/ --user=admin --password=%artifactoryPassword%"
+            param("org.jfrog.artifactory.selectedDeployableServer.downloadSpecSource", "Job configuration")
+            param("org.jfrog.artifactory.selectedDeployableServer.useSpecs", "false")
+            param("org.jfrog.artifactory.selectedDeployableServer.uploadSpecSource", "Job configuration")
         }
     }
 }
