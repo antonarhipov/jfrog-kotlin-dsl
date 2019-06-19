@@ -8,6 +8,10 @@ import jetbrains.buildServer.configs.kotlin.v2018_2.triggers.vcs
 object Build : BuildType({
     name = "Build"
 
+    params {
+        password("artifactoryPassword", "credentialsJSON:31febc20-7c58-4e63-9b22-59d009a38298")
+    }
+
     vcs {
         root(DslContext.settingsRoot)
     }
